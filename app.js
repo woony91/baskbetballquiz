@@ -71,6 +71,7 @@ function loadChoices(choices){
 
 //Go to the next question after selecting choice
 
+function renderNext(){
 $(document).on('click', '.choice', function(){
     clearInterval(timer);
     const selectedAnswer = $(this).attr('data-answer');
@@ -91,6 +92,7 @@ $(document).on('click', '.choice', function(){
     }
     console.log(selectedAnswer);
 });
+}
 
 //End of the quiz display
 
@@ -105,6 +107,7 @@ function displayResult(){
     $('#quiz').html(result);
 };
 
+function reset(){
 $(document).on('click', '#reset', function(){
     console.log('Resetting');
     counter = 30;
@@ -115,6 +118,7 @@ $(document).on('click', '#reset', function(){
 
     loadQuestion();
 });
+}
 
 //Display the number of questions remaining and score
 
@@ -155,10 +159,20 @@ function displayGif(condition){
     }
 }
 
-
+function startQuiz(){
 $('#start').click(function(){
     $('#start').remove();
     $('.quizpicture').remove();
     $('#time').html(counter);
     loadQuestion();
 });
+}
+
+
+function makeQuiz() {
+    startQuiz();
+    reset();
+    renderNext();
+  }
+  
+  $(makeQuiz);

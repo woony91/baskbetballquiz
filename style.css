@@ -1,0 +1,15 @@
+.choice {
+  border: 1px solid lightslategrey;
+  padding: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.container {
+  text-align: center;
+}
+
+.jumbotron {
+  background: #b0e0e6;
+  padding: 20px;
+}

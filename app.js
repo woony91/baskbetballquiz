@@ -5,20 +5,26 @@ let score = 0;
 let wrong = 0;
 let timer;
 
-//Go to the next question if timer is over, halt when no more questions
-
-function nextQuestion(){
-    
-    const questionOver = (quizQuestions.length - 1) === currentQuestion;
-    if (questionOver){
-        console.log('Quiz is over');
-        displayResult();
-    } else {
-    currentQuestion++;
-    loadQuestion();
+//Starting the quiz
+function startQuiz(){
+    $('#start').click(function(){
+        $('#start').remove();
+        $('.quizpicture').remove();
+        $('#time').html(counter);
+        loadQuestion();
+    });
     }
-}
 
+//Show choices for users to select from
+function loadChoices(choices){
+    let result = '';
+
+    for (let i = 0; i < choices.length; i++) {
+        result += `<p class="choice" data-answer="${choices[i]}">${choices[i]}</p>`;
+    }
+
+    return result;
+};
 
 //Start a 60 second timer for user to respond or choose an answer
 
@@ -42,6 +48,20 @@ function countDown(){
     }
 }
 
+//Go to the next question if timer is over, halt when no more questions
+
+function nextQuestion(){
+    
+    const questionOver = (quizQuestions.length - 1) === currentQuestion;
+    if (questionOver){
+        console.log('Quiz is over');
+        displayResult();
+    } else {
+    currentQuestion++;
+    loadQuestion();
+    }
+}
+
 //Display the question and the choices to the browser
 function loadQuestion() {
     counter = 30;
@@ -57,16 +77,6 @@ function loadQuestion() {
         ${loadRemainingQuestion()}
         ${loadScore()}
     `);
-};
-
-function loadChoices(choices){
-    let result = '';
-
-    for (let i = 0; i < choices.length; i++) {
-        result += `<p class="choice" data-answer="${choices[i]}">${choices[i]}</p>`;
-    }
-
-    return result;
 };
 
 //Go to the next question after selecting choice
@@ -94,52 +104,6 @@ $(document).on('click', '.choice', function(){
 });
 }
 
-//End of the quiz display
-
-function displayResult(){
-    const result = `
-        <p>You got ${score} question(s) right</p>
-        <p>You got ${wrong} question(s) wrong</p>
-        <p>Out of a total of ${quizQuestions.length} questions</p>
-        <button class="btn btn-primary" id="reset">RESET QUIZ</button>
-    `;
-
-    $('#quiz').html(result);
-};
-
-function reset(){
-$(document).on('click', '#reset', function(){
-    console.log('Resetting');
-    counter = 30;
-    currentQuestion = 0;
-    score = 0;
-    wrong = 0;
-    timer = null;
-
-    loadQuestion();
-});
-}
-
-//Display the number of questions remaining and score
-
-function loadRemainingQuestion(){
-    const remainingQuestion = quizQuestions.length - (currentQuestion + 1);
-    
-    return `${remainingQuestion} Questions Remaining     |     `
-}
-
-function loadScore(){
-    return ` Score: ${score}`
-}
-
-//Gives a random image
-function randomImage(images){
-    const random = Math.floor(Math.random() * images.length);
-    const randomImage = images[random]
-    return randomImage;
-}
-
-
 //Choice selection result
 
 function displayGif(condition){
@@ -159,15 +123,51 @@ function displayGif(condition){
     }
 }
 
-function startQuiz(){
-$('#start').click(function(){
-    $('#start').remove();
-    $('.quizpicture').remove();
-    $('#time').html(counter);
-    loadQuestion();
-});
+//Gives a random image
+function randomImage(images){
+    const random = Math.floor(Math.random() * images.length);
+    const randomImage = images[random]
+    return randomImage;
 }
 
+//End of the quiz display
+
+function displayResult(){
+    const result = `
+        <p>You got ${score} question(s) right</p>
+        <p>You got ${wrong} question(s) wrong</p>
+        <p>Out of a total of ${quizQuestions.length} questions</p>
+        <button class="btn btn-primary" id="reset">RESET QUIZ</button>
+    `;
+
+    $('#quiz').html(result);
+};
+
+//Display the number of questions remaining and score
+
+function loadRemainingQuestion(){
+    const remainingQuestion = quizQuestions.length - (currentQuestion + 1);
+    
+    return `${remainingQuestion} Questions Remaining     |     `
+}
+
+function loadScore(){
+    return ` Score: ${score}`
+}
+
+//Click reset to start over
+function reset(){
+    $(document).on('click', '#reset', function(){
+        console.log('Resetting');
+        counter = 30;
+        currentQuestion = 0;
+        score = 0;
+        wrong = 0;
+        timer = null;
+    
+        loadQuestion();
+    });
+    }
 
 function makeQuiz() {
     startQuiz();

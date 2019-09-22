@@ -91,23 +91,27 @@ function renderNext(){
         const selectedAnswer = $('input[type="radio"]:checked').val();
         const correctAnswer = quizQuestions[currentQuestion].correctAnswer;
         
-        if (correctAnswer === selectedAnswer){
-            //User is correct
-            score++;
-            displayGif('correct')
-            setTimeout(nextQuestion, 5 * 1000);
-            console.log('correct!!!')
-        } else {
-            //User is incorrect
-            wrong++;
-            displayGif('wrong')
-            setTimeout(nextQuestion, 5 * 1000);
-            console.log('wrong!!!')
+        if (selectedAnswer) {
+            if (correctAnswer === selectedAnswer){
+                //User is correct
+                score++;
+                displayGif('correct')
+                setTimeout(nextQuestion, 5 * 1000);
+                console.log('correct!!!')
+            } else {
+                //User is incorrect
+                wrong++;
+                displayGif('wrong')
+                setTimeout(nextQuestion, 5 * 1000);
+                console.log('wrong!!!')
+            }
+        }
+        else {
+            alert('Select an answer!')
         }
         console.log(selectedAnswer);
     });
-    }
-
+}
 //Choice selection result
 
 function displayGif(condition){

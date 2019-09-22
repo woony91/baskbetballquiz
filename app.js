@@ -3,49 +3,52 @@ let counter = 30;
 let currentQuestion = 0;
 let score = 0;
 let wrong = 0;
-let timer;
+// let timer;
 
 //Starting the quiz
 function startQuiz(){
     $('#start').click(function(){
         $('#start').remove();
         $('.quizpicture').remove();
-        $('#time').html(counter);
+        // $('#time').html(counter);
         loadQuestion();
     });
     }
+
+
 
 //Show choices for users to select from
 function loadChoices(choices){
     let result = '';
     for (let i = 0; i < choices.length; i++) {
-        result += `<input type="radio" class="choice" name="answerChoice" value="${choices[i]}">
+        result += `<input type="radio" id="myRadio" class="choice" name="answerChoice" value="${choices[i]}">
         <label for=${choices[i]}>${choices[i]}</label><br/>`;
     }
+
     return `<fieldset>${result}</fieldset>`;
 };
 
 //Start a 60 second timer for user to respond or choose an answer
 
-function timesUp(){
-    clearInterval(timer);
+// function timesUp(){
+//     clearInterval(timer);
 
-    wrong++;
+//     wrong++;
     
-    displayGif('wrong')
-    setTimeout(nextQuestion, 5 * 1000);
-}
+//     displayGif('wrong')
+//     setTimeout(nextQuestion, 5 * 1000);
+// }
 
-function countDown(){
-    counter--;
+// function countDown(){
+//     counter--;
 
-    $('#time').html('Timer: ' + counter);
+//     $('#time').html('Timer: ' + counter);
 
-    if (counter === 0){
-        //what will happen if timer hits 0
-        timesUp();
-    }
-}
+//     if (counter === 0){
+//         //what will happen if timer hits 0
+//         timesUp();
+//     }
+// }
 
 //Go to the next question if timer is over, halt when no more questions
 
@@ -63,17 +66,17 @@ function nextQuestion(){
 
 //Display the question and the choices to the browser
 function loadQuestion() {
-    counter = 30;
-    timer = setInterval(countDown, 1000);
+    // counter = 30;
+    // timer = setInterval(countDown, 1000);
     const question = quizQuestions[currentQuestion].question;
     const choices = quizQuestions[currentQuestion].choices;
     
-    $('#time').html('Timer: ' + counter);
+    // $('#time').html('Timer: ' + counter);
     $('#quiz').html(`
         <h4>${question}</h4>
         <form>
             ${loadChoices(choices)}<br/>
-            <button id="submitAnswer">Submit your answer!</button>
+            <button class="button submitButton" id="submitAnswer">Submit your answer!</button>
         </form>
         ${loadRemainingQuestion()}
         ${loadScore()}
@@ -84,7 +87,7 @@ function loadQuestion() {
 function renderNext(){
     $(document).on('click', '#submitAnswer', function(event){
         event.preventDefault();
-        clearInterval(timer);
+        // clearInterval(timer);
         const selectedAnswer = $('input[type="radio"]:checked').val();
         const correctAnswer = quizQuestions[currentQuestion].correctAnswer;
         
@@ -138,7 +141,7 @@ function displayResult(){
         <p>You got ${score} question(s) right</p>
         <p>You got ${wrong} question(s) wrong</p>
         <p>Out of a total of ${quizQuestions.length} questions</p>
-        <button class="btn btn-primary" id="reset">RESET QUIZ</button>
+        <button class="resetButton button" id="reset">RESET QUIZ</button>
     `;
 
     $('#quiz').html(result);
